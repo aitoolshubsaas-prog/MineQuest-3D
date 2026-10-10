@@ -8,7 +8,7 @@ Updated: 2026-10-10. This document is the source of truth for story-by-story dev
 - Phase 3: **Not started**
 - Phase 4: **Not started**
 - Phase 5: **Not started**
-- Current stories: **MQ-101** automated browser assertions committed, execution pending; **MQ-103** local block persistence implemented, browser reload verification pending.
+- Current stories: **MQ-101** automated browser assertions committed, execution pending; **MQ-102** block selection outline and mining progress implemented, interaction testing pending; **MQ-103** local block and inventory persistence implemented, browser reload verification pending.
 - Latest known code improvement: day/night cycle committed; needs browser verification.
 - Play: https://aitoolshubsaas-prog.github.io/MineQuest-3D/
 - Source: https://github.com/aitoolshubsaas-prog/MineQuest-3D
@@ -97,7 +97,8 @@ Story descriptions and acceptance conditions are listed directly under each stor
 | 2026-10-10 | MQ-104 (partial) | Implemented, unverified | Day/night code committed; visual browser test pending. |
 | 2026-10-10 | Planning | Completed | Five-phase roadmap and story tracker created. |
 | 2026-10-10 | MQ-101 | In progress | Added diagnostics (2acc82a) and stronger Playwright assertions (06a1a66). Browser execution not yet verified; sandbox cannot resolve deployed host. |
-| 2026-10-10 | MQ-103 | In progress | Block changes now auto-save to browser localStorage and reload on next visit (51e3ca6). Browser verification pending; saves are per-browser, not server-based. |
+| 2026-10-10 | MQ-103 | In progress | Block changes auto-save to localStorage (51e3ca6); inventory now saves and reloads (93ac6df). Browser verification pending; saves are per-browser, not server-based. |
+| 2026-10-10 | MQ-102 | In progress | Added targeted block outline, mining percentage feedback, and reset mining on tool switch (93ac6df). User/browser verification pending. |
 
 ## Development protocol
 Work one story at a time. For each story: research compatible sources, implement, commit, test, update checkbox and progress log with commit/test evidence, then request player verification when necessary. Do not mark stories done on code review alone. Development happens during active sessions, not continuously while the chat is idle.
