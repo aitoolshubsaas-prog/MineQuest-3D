@@ -2,6 +2,22 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js';
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x87ceeb);const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,.1,100);const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);document.body.prepend(renderer.domElement);const ambient=new THREE.HemisphereLight(0xffffff,0x62733a,2);scene.add(ambient);const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(15,25,10);scene.add(sun);scene.fog=new THREE.Fog(0x87ceeb,25,75);const daylightSky=new THREE.Color(0x87ceeb),nightSky=new THREE.Color(0x101a36),skyBlend=new THREE.Color();let worldTime=0;const dayLength=360;function updateDaylight(dt){worldTime=(worldTime+dt)%dayLength;const angle=worldTime/dayLength*Math.PI*2;const light=Math.max(0,Math.sin(angle));const brightness=.16+.84*light;ambient.intensity=.35+1.65*brightness;sun.intensity=.15+1.85*light;sun.position.set(Math.cos(angle)*35,Math.sin(angle)*35,12);skyBlend.copy(nightSky).lerp(daylightSky,Math.min(1,brightness));scene.background.copy(skyBlend);scene.fog.color.copy(skyBlend)}
 const kinds=['grass','dirt','stone','wood','leaves'],names=[...kinds,'pickaxe','axe','shovel','sword'],inventory=[64,64,64,64,64],colors=['#5aab45','#805635','#888888','#80502d','#348445'],materials={};for(let i=0;i<5;i++){const c=document.createElement('canvas');c.width=c.height=32;const g=c.getContext('2d');g.fillStyle=colors[i];g.fillRect(0,0,32,32);let s=i+17;for(let j=0;j<180;j++){s=(s*1664525+1013904223)>>>0;const x=s%32;s=(s*1664525+1013904223)>>>0;const y=s%32;g.fillStyle=j%2?'#ffffff22':'#00000022';g.fillRect(x,y,2,2)}const t=new THREE.CanvasTexture(c);t.magFilter=THREE.NearestFilter;materials[kinds[i]]=new THREE.MeshLambertMaterial({map:t})}
+// Original pixel-art log texture: bark sides and concentric growth rings on the ends.
+function logTexture(top){
+ const c=document.createElement('canvas');c.width=c.height=32;const g=c.getContext('2d');
+ let seed=top?98231:27183;const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296};
+ g.fillStyle=top?'#bc9160':'#79502f';g.fillRect(0,0,32,32);
+ if(top){
+  for(let ring=14;ring>=2;ring-=3){g.strokeStyle=ring%2?'#704724':'#96673e';g.lineWidth=1.5;g.strokeRect(16-ring,16-ring,ring*2,ring*2)}
+  for(let j=0;j<95;j++){g.fillStyle=rand()>.5?'#54391e44':'#efd3a044';g.fillRect(Math.floor(rand()*32),Math.floor(rand()*32),1,1)}
+ }else{
+  for(let x=0;x<32;x+=3){g.fillStyle=x%2?'#4d321f':'#a27446';g.fillRect(x+Math.floor(rand()*2),0,1+Math.floor(rand()*2),32)}
+  for(let j=0;j<110;j++){g.fillStyle=rand()>.5?'#d4a16a66':'#39231466';g.fillRect(Math.floor(rand()*32),Math.floor(rand()*32),1,2+Math.floor(rand()*6))}
+ }
+ const t=new THREE.CanvasTexture(c);t.magFilter=THREE.NearestFilter;t.minFilter=THREE.NearestFilter;t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+const logBark=logTexture(false),logEnd=logTexture(true);
+materials.wood=[new THREE.MeshLambertMaterial({map:logBark}),new THREE.MeshLambertMaterial({map:logBark}),new THREE.MeshLambertMaterial({map:logEnd}),new THREE.MeshLambertMaterial({map:logEnd}),new THREE.MeshLambertMaterial({map:logBark}),new THREE.MeshLambertMaterial({map:logBark})];
 // MQ-103: restore inventory from the same browser, validating every stack.
 try{const stacks=JSON.parse(localStorage.getItem('minequest-inventory-v1')||'null');if(Array.isArray(stacks)&&stacks.length===5&&stacks.every(n=>Number.isInteger(n)&&n>=0&&n<=9999))inventory.splice(0,5,...stacks)}catch(e){console.warn('Inventory save could not be loaded',e)}
 const blocks=new Map(),geo=new THREE.BoxGeometry(1,1,1),key=(x,y,z)=>x+','+y+','+z;function add(x,y,z,t){const k=key(x,y,z);if(blocks.has(k)||!materials[t])return;const m=new THREE.Mesh(geo,materials[t]);m.position.set(x,y,z);m.userData={x,y,z,t};scene.add(m);blocks.set(k,m)}function remove(x,y,z){const k=key(x,y,z),m=blocks.get(k);if(m){scene.remove(m);blocks.delete(k)}}function height(x,z){return Math.floor(Math.sin(x*.22)+Math.cos(z*.24))}for(let x=-23;x<=23;x++)for(let z=-23;z<=23;z++){const h=height(x,z);for(let y=-3;y<=h;y++)add(x,y,z,y===h?'grass':y>=h-2?'dirt':'stone')}for(let x=-20;x<=20;x+=7)for(let z=-20;z<=20;z+=9){if(Math.abs(x)<5&&Math.abs(z)<5)continue;let h=height(x,z);for(let y=h+1;y<h+5;y++)add(x,y,z,'wood');for(let dx=-2;dx<=2;dx++)for(let dz=-2;dz<=2;dz++)for(let dy=3;dy<=5;dy++)if(Math.abs(dx)+Math.abs(dz)<4)add(x+dx,h+dy,z+dz,'leaves')}
