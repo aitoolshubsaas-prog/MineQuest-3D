@@ -8,7 +8,7 @@ Updated: 2026-10-10. This document is the source of truth for story-by-story dev
 - Phase 3: **Not started**
 - Phase 4: **Not started**
 - Phase 5: **Not started**
-- Current story: **MQ-101** Read-only player diagnostics and Playwright assertions for actual WASD displacement, jumping, tool selection and pause are committed. Browser execution still pending; the test is not yet marked complete.
+- Current stories: **MQ-101** automated browser assertions committed, execution pending; **MQ-103** local block persistence implemented, browser reload verification pending.
 - Latest known code improvement: day/night cycle committed; needs browser verification.
 - Play: https://aitoolshubsaas-prog.github.io/MineQuest-3D/
 - Source: https://github.com/aitoolshubsaas-prog/MineQuest-3D
@@ -20,7 +20,7 @@ Each story needs implementation committed to GitHub, a browser smoke test where 
 - [x] **MQ-100** Repair WASD collision movement (user reported movement working; no automated verification).
 - [ ] **MQ-101** Add repeatable browser tests: WASD in four directions, Space jump, Shift sprint, Backspace/Delete pause, mouse lock.
 - [ ] **MQ-102** Test/fix left-hold mining, right-click placement, inventory changes, and tools 6–9.
-- [ ] **MQ-103** Test saving/reloading and fix persistence failures; display clear errors.
+- [ ] **MQ-103** Test saving/reloading and fix persistence failures; display clear errors. Local block edits now auto-save to localStorage, but browser reload verification remains pending.
 - [ ] **MQ-104** Verify day/night visuals and improve performance on ordinary laptops.
 **Player acceptance:** move, jump, mine, place, save, reload, and pause successfully.
 
@@ -71,6 +71,7 @@ Before reusing any code or assets: inspect current repository, license, dependen
 | 2026-10-10 | MQ-104 (partial) | Implemented, unverified | Day/night code committed; visual browser test pending. |
 | 2026-10-10 | Planning | Completed | Five-phase roadmap and story tracker created. |
 | 2026-10-10 | MQ-101 | In progress | Added diagnostics (2acc82a) and stronger Playwright assertions (06a1a66). Browser execution not yet verified; sandbox cannot resolve deployed host. |
+| 2026-10-10 | MQ-103 | In progress | Block changes now auto-save to browser localStorage and reload on next visit (51e3ca6). Browser verification pending; saves are per-browser, not server-based. |
 
 ## Development protocol
 Work one story at a time. For each story: research compatible sources, implement, commit, test, update checkbox and progress log with commit/test evidence, then request player verification when necessary. Do not mark stories done on code review alone. Development happens during active sessions, not continuously while the chat is idle.
