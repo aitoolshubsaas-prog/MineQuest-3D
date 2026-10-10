@@ -43,7 +43,7 @@ const rightHand=handPart(.32,.23,.25,skin,.27,-.43,-.70);rightHand.rotation.z=-.
 let selected=0;
 let placementSwingUntil=0;
 let heldModel=null;
-function refreshHeldModel(){if(heldModel){handGroup.remove(heldModel);heldModel.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material!==skin&&o.material!==sleeve&&o.material!==materials[kinds[selected]])o.material.dispose()})}
+function refreshHeldModel(){if(heldModel){handGroup.remove(heldModel);heldModel.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&!Object.values(materials).includes(o.material)&&o.material!==skin&&o.material!==sleeve)o.material.dispose()})}
 heldModel=new THREE.Group();handGroup.add(heldModel);
 const make=(w,h,d,mat,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.renderOrder=901;heldModel.add(m)};
 if(selected<5){make(.27,.27,.27,materials[kinds[selected]],.35,-.39,-1.04)}
