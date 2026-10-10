@@ -29,7 +29,7 @@ let heldModel=null;
 function refreshHeldModel(){if(heldModel){handGroup.remove(heldModel);heldModel.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material!==skin&&o.material!==sleeve&&o.material!==materials[kinds[selected]])o.material.dispose()})}
 heldModel=new THREE.Group();handGroup.add(heldModel);
 const make=(w,h,d,mat,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.renderOrder=901;heldModel.add(m)};
-if(selected<5){make(.27,.27,.27,materials[kinds[selected]],.46,-.48,-.87)}
+if(selected<5){make(.27,.27,.27,materials[kinds[selected]],.35,-.39,-1.04)}
 else{const wood=new THREE.MeshLambertMaterial({color:0x80502d,depthTest:false,depthWrite:false});const metal=new THREE.MeshLambertMaterial({color:selected===8?0xbac5cd:0x919da3,depthTest:false,depthWrite:false});make(.075,.46,.075,wood,.47,-.34,-.86);if(selected===8)make(.12,.39,.055,metal,.47,-.03,-.86);else if(selected===7)make(.21,.10,.08,metal,.47,-.12,-.86);else make(.32,.11,.08,metal,.47,-.12,-.86)}
 }
 refreshHeldModel();
