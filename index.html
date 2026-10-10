@@ -18,10 +18,11 @@ function sound(type){if(!soundEnabled)return;try{audioCtx??=new (window.AudioCon
 const soundButton=document.createElement('button');soundButton.type='button';soundButton.textContent='🔊 Sound on';soundButton.style.cssText='position:fixed;top:10px;right:10px;z-index:8;padding:8px 12px;font-size:14px';document.body.append(soundButton);soundButton.addEventListener('click',()=>{soundEnabled=!soundEnabled;soundButton.textContent=soundEnabled?'🔊 Sound on':'🔇 Sound off'});
 // MQ-102: original first-person blocky arm and held-item view model.
 const handGroup=new THREE.Group();camera.add(handGroup);scene.add(camera);
-const skin=new THREE.MeshLambertMaterial({color:0xc89568,depthTest:false,depthWrite:false});
+const skin=new THREE.MeshLambertMaterial({color:0xffcba4,depthTest:false,depthWrite:false});
 const sleeve=new THREE.MeshLambertMaterial({color:0x347ca6,depthTest:false,depthWrite:false});
 function handPart(w,h,d,mat,x,y,z){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);mesh.position.set(x,y,z);mesh.renderOrder=900;handGroup.add(mesh);return mesh}
-handPart(.20,.48,.23,sleeve,.48,-.43,-.70);handPart(.19,.23,.22,skin,.48,-.70,-.70);
+// Horizontal forearm reaching inward from the bottom-right, with peach skin visible.
+handPart(.46,.19,.23,sleeve,.57,-.53,-.70);handPart(.27,.19,.23,skin,.21,-.53,-.70);
 let selected=0;
 let heldModel=null;
 function refreshHeldModel(){if(heldModel){handGroup.remove(heldModel);heldModel.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material!==skin&&o.material!==sleeve&&o.material!==materials[kinds[selected]])o.material.dispose()})}
