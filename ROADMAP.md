@@ -8,7 +8,7 @@ Updated: 2026-10-10. This document is the source of truth for story-by-story dev
 - Phase 3: **Not started**
 - Phase 4: **Not started**
 - Phase 5: **Not started**
-- Current story: **MQ-101** Playwright smoke test script committed; execution and movement assertions still pending. Next: test actual coordinate changes and jumping.
+- Current story: **MQ-101** Read-only player diagnostics and Playwright assertions for actual WASD displacement, jumping, tool selection and pause are committed. Browser execution still pending; the test is not yet marked complete.
 - Latest known code improvement: day/night cycle committed; needs browser verification.
 - Play: https://aitoolshubsaas-prog.github.io/MineQuest-3D/
 - Source: https://github.com/aitoolshubsaas-prog/MineQuest-3D
@@ -69,7 +69,8 @@ Before reusing any code or assets: inspect current repository, license, dependen
 | --- | --- | --- | --- |
 | 2026-10-10 | MQ-100 | Player-reported working | WASD fix committed earlier; user said movement seems to work. |
 | 2026-10-10 | MQ-104 (partial) | Implemented, unverified | Day/night code committed; visual browser test pending. |
-| 2026-10-10 | Planning | Completed | Five-phase roadmap and story tracker created. |\n| 2026-10-10 | MQ-101 | In progress | Added tests/movement.spec.cjs (commit a1cb58c); browser execution not yet verified. |
+| 2026-10-10 | Planning | Completed | Five-phase roadmap and story tracker created. |
+| 2026-10-10 | MQ-101 | In progress | Added diagnostics (2acc82a) and stronger Playwright assertions (06a1a66). Browser execution not yet verified; sandbox cannot resolve deployed host. |
 
 ## Development protocol
 Work one story at a time. For each story: research compatible sources, implement, commit, test, update checkbox and progress log with commit/test evidence, then request player verification when necessary. Do not mark stories done on code review alone. Development happens during active sessions, not continuously while the chat is idle.
