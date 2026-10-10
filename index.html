@@ -21,8 +21,9 @@ const handGroup=new THREE.Group();camera.add(handGroup);scene.add(camera);
 const skin=new THREE.MeshLambertMaterial({color:0xffcba4,depthTest:false,depthWrite:false});
 const sleeve=new THREE.MeshLambertMaterial({color:0x347ca6,depthTest:false,depthWrite:false});
 function handPart(w,h,d,mat,x,y,z){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);mesh.position.set(x,y,z);mesh.renderOrder=900;handGroup.add(mesh);return mesh}
-// Horizontal forearm reaching inward from the bottom-right, with peach skin visible.
-handPart(.46,.19,.23,sleeve,.57,-.53,-.70);handPart(.27,.19,.23,skin,.21,-.53,-.70);
+// Single right arm, angled inward from the bottom-right like the reference, with peach skin.
+const rightSleeve=handPart(.49,.23,.25,sleeve,.62,-.61,-.70);rightSleeve.rotation.z=-.48;
+const rightHand=handPart(.32,.23,.25,skin,.27,-.43,-.70);rightHand.rotation.z=-.48;
 let selected=0;
 let heldModel=null;
 function refreshHeldModel(){if(heldModel){handGroup.remove(heldModel);heldModel.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material!==skin&&o.material!==sleeve&&o.material!==materials[kinds[selected]])o.material.dispose()})}
