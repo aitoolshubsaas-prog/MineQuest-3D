@@ -61,5 +61,9 @@ let last=performance.now();function loop(now){requestAnimationFrame(loop);const 
 const miningSwing=locked&&held&&selected!==8?Math.sin(now*.023)*.20:0;
 const placingSwing=locked&&now<placementSwingUntil?Math.sin((1-(placementSwingUntil-now)/240)*Math.PI)*.38:0;
 handGroup.rotation.x=-(miningSwing+placingSwing);
+// Keep the first-person arm and tool in front of nearby blocks and terrain.
+handGroup.visible=locked;
+handGroup.traverse(part=>{if(part.isMesh){part.frustumCulled=false;part.material.depthTest=false;part.material.depthWrite=false}});
+
 renderer.render(scene,camera)}requestAnimationFrame(loop);addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 </script></body></html>
