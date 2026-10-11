@@ -1,6 +1,6 @@
 # MineQuest 3D — Five-phase roadmap and live progress
 
-Updated: 2026-10-10. This document is the source of truth for story-by-story development. **Statuses change only after a GitHub commit and relevant verification.** This is not an automated live dashboard: progress is updated during subsequent development sessions.
+Updated: 2026-10-11. This document is the source of truth for story-by-story development. **Statuses change only after a GitHub commit and relevant verification.** This is not an automated live dashboard: progress is updated during subsequent development sessions.
 
 ## Progress snapshot
 - Phase 1: **In progress** — playable prototype, movement fix reported working by player; full regression testing outstanding.
@@ -9,7 +9,7 @@ Updated: 2026-10-10. This document is the source of truth for story-by-story dev
 - Phase 4: **Not started**
 - Phase 5: **Not started**
 - Current stories: **MQ-101** automated browser assertions committed, execution pending; **MQ-102** block selection outline and mining progress implemented, interaction testing pending; **MQ-103** local block and inventory persistence implemented, browser reload verification pending.
-- Latest known code improvement: day/night cycle committed; needs browser verification.
+- Latest code improvement: localized raycasting and corrected held-item material isolation (8e5a6a4); browser verification pending. Day/night visuals also remain unverified.
 - Play: https://aitoolshubsaas-prog.github.io/MineQuest-3D/
 - Source: https://github.com/aitoolshubsaas-prog/MineQuest-3D
 
@@ -100,5 +100,13 @@ Story descriptions and acceptance conditions are listed directly under each stor
 | 2026-10-10 | MQ-103 | In progress | Block changes auto-save to localStorage (51e3ca6); inventory now saves and reloads (93ac6df). Browser verification pending; saves are per-browser, not server-based. |
 | 2026-10-10 | MQ-102 | In progress | Added targeted block outline, mining percentage feedback, and reset mining on tool switch (93ac6df). User/browser verification pending. |
 
-| 2026-10-10 | MQ-101 / MQ-102 | Implemented, unverified | Cleared all held keys and mining target/progress on pointer-lock exit to prevent stuck movement or mining when resuming. Browser regression test pending. Commit 8e0f2c2. |\n\n| 2026-10-10 | MQ-102 | Implemented, unverified | Mining indicator now resets immediately when a block breaks, rather than showing stale 100% progress until the next frame. Commit 28da0b9. Browser testing pending. |\n\n| 2026-10-10 | Audio enhancement | Implemented, unverified | Added original Web Audio effects for footsteps, jumping, mining, block placement and tool selection, plus a sound toggle. No copyrighted Minecraft sound assets included. Commit 97ea01a. Live listening test pending. |\n\n| 2026-10-10 | MQ-102 | Implemented, unverified | Added an original blocky first-person arm and held block/tool models that change with hotbar selection, with gentle walking bob. Commit b7835eb. Live browser visual test pending. |\n\n| 2026-10-10 | MQ-102 | Implemented, unverified | Improved first-person arm visibility: prevent held meshes being culled or hidden behind nearby blocks; hide hand when paused. Commit b88835c. Live browser test pending. |\n\n## Development protocol
+| 2026-10-10 | MQ-101 / MQ-102 | Implemented, unverified | Cleared all held keys and mining target/progress on pointer-lock exit to prevent stuck movement or mining when resuming. Browser regression test pending. Commit 8e0f2c2. |
+| 2026-10-10 | MQ-102 | Implemented, unverified | Mining indicator now resets immediately when a block breaks, rather than showing stale 100% progress until the next frame. Commit 28da0b9. Browser testing pending. |
+| 2026-10-10 | Audio enhancement | Implemented, unverified | Added original Web Audio effects for footsteps, jumping, mining, block placement and tool selection, plus a sound toggle. No copyrighted Minecraft sound assets included. Commit 97ea01a. Live listening test pending. |
+| 2026-10-10 | MQ-102 | Implemented, unverified | Added an original blocky first-person arm and held block/tool models that change with hotbar selection, with gentle walking bob. Commit b7835eb. Live browser visual test pending. |
+| 2026-10-10 | MQ-102 | Implemented, unverified | Improved first-person arm visibility: prevent held meshes being culled or hidden behind nearby blocks; hide hand when paused. Commit b88835c. Live browser test pending. |
+
+| 2026-10-11 | MQ-104 / MQ-102 | Implemented, unverified | Limited block-target raycasting to nearby meshes, cleared stale target after block edits, and cloned held-item materials to prevent altering world block rendering. Commit 8e5a6a4. Browser smoke test pending. |
+
+## Development protocol
 Work one story at a time. For each story: research compatible sources, implement, commit, test, update checkbox and progress log with commit/test evidence, then request player verification when necessary. Do not mark stories done on code review alone. Development happens during active sessions, not continuously while the chat is idle.
